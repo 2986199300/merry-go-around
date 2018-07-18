@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .carousel {
+            position: absolute;
+            height: 100px;
+            width: 3000px;
+            background: lightgray;
+        }
+
+        .pic {
+            height: 100px;
+            width: 100px;
+            float: left;
+            margin-right: 20px;
+            background: lightpink;
+        }
+
+        @keyframes myrun {
+            0% {
+                left: 0px;
+                
+            }
+            100% {
+                left: -120px;
+            }
+        }
+
+        .run {
+            animation: myrun 1.5s;
+            animation-timing-function: linear; 
+        }
+
+        .carousel:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel">
+        <div class="pic">1</div>
+        <div class="pic">2</div>
+        <div class="pic">3</div>
+        <div class="pic">4</div>
+        <div class="pic">5</div>
+        <div class="pic">6</div>
+        <div class="pic">7</div>
+        <div class="pic">8</div>
+    </div>
+    <script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+    <script>
+        // 将第一个节点删除并添加到父元素的最后
+        // 参数分别是需要删除的元素的类和需要添加元素的父元素的类
+        function remToAdd(target, parent) {
+            $($(target)[0]).clone().appendTo(parent);
+            $(target)[0].remove();
+        }
+        // 实现动画效果
+        function run() {
+            $('.carousel').addClass('run');
+        }
+
+        $(document).ready(function () {
+             run();
+        });
+        $('.carousel').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+            $('.carousel').removeClass('run');
+            remToAdd('.pic', '.carousel');
+            setTimeout("run()", 0);
+        })
+    </script>
+</body>
+
+</html>
